@@ -1,5 +1,5 @@
 import { setupWebsocket } from './setupWebsocket'
-import { messageHandler } from '../redux/messageHandler'
+import { messageHandler } from '../features/WebSocketHandler/messageHandler'
 
 export class WebSocketHandler {
     // create wrapper class and assign event listeners
@@ -15,21 +15,19 @@ export class WebSocketHandler {
     // Assign WebSocket Callbacks
     onOpen = received => {
         console.log('onOpen: ')
-        console.log(received)
         messageHandler({ type: 'onOpen', event: received })
     }
     onMessage = received => {
         console.log('onMessage: ')
-        console.log(received)
         messageHandler({ type: 'onMessage', event: received })
     }
     onError = received => {
         console.log('onError: ')
-        console.log(received)
+        messageHandler({ type: 'onError', event: received })
     }
     onClose = received => {
         console.log('onClose: ')
-        console.log(received)
+        messageHandler({ type: 'onClose', event: received })
     }
 
     // Create send message that will be called to transmit messages

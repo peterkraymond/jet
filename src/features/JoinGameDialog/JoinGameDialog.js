@@ -21,9 +21,10 @@ import {
 	useMediaQuery,
 } from '@material-ui/core'
 import _ from 'lodash'
-import useSendCb from '../hooks/useSendCb'
+import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getPlayerNames } from '../redux/selectors'
+import { getGamePin } from '../game/gameSlice'
+// import { getPlayerNames } from '../../redux/selectors'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -46,12 +47,14 @@ export default function JoinGameDialog() {
 	const wsSend = useSendCb()
 
 	// get player names from datastore
-	const allNames = useSelector(getPlayerNames)
+	// const allNames = useSelector(getPlayerNames)
+	const allNames = ['Player 0', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
 
 	// create state for modal dialog state
 	const [open, setOpen] = React.useState(false)
 	// TODO: create redux selector for pin
-	const [pin, setPin] = React.useState(1234)
+	const reduxGamePin = useSelector(getGamePin)
+	const [pin, setPin] = React.useState(reduxGamePin)
 	const [name, setName] = React.useState(allNames[0])
 
 	// identify basic theming and responsive dialog size
@@ -60,6 +63,8 @@ export default function JoinGameDialog() {
 
 	// handle opening and closing of the dialog window
 	const handleClickOpen = () => {
+		// TODO: update all variables based on selectors
+		setPin(reduxGamePin)
 		setOpen(true)
 	}
 	const handleClose = evt => {
@@ -101,7 +106,7 @@ export default function JoinGameDialog() {
 	// create message to send back to ws connection
 	const compileMessage = () => {
 		const message = {
-			type: 'connect',
+			type: 'connect_to_game',
 			data: {
 				pin: pin,
 				name: name,

@@ -19,7 +19,7 @@ import {
 	useMediaQuery,
 } from '@material-ui/core'
 import _ from 'lodash'
-import useSendCb from '../hooks/useSendCb'
+import useSendCb from '../../hooks/useSendCb'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -43,7 +43,7 @@ export default function NewGameDialog() {
 
 	// create state for modal dialog state
 	const [open, setOpen] = React.useState(false)
-	const [useVirtualDeck, setUseVirtualDeck] = React.useState(false)
+	const [useVirtualDeck, setUseVirtualDeck] = React.useState(true)
 	// const [players, setPlayers] = React.useState({
 	// 	p0: 'Player 0',
 	// 	p1: 'Player 1',
@@ -78,10 +78,10 @@ export default function NewGameDialog() {
 				const message = compileMessage()
 				wsSend(message)
 				// TODO: move this to another location, but for now, update the game with the cards for each player
-				const allUpdates = updateCards()
-				allUpdates.map(message => {
-					wsSend(message)
-				})
+				// const allUpdates = updateCards()
+				// allUpdates.map(message => {
+				// 	wsSend(message)
+				// })
 				break
 			default:
 				break
@@ -138,11 +138,11 @@ export default function NewGameDialog() {
 		]
 		const data = {
 			players: playersData,
-			virtual_deck: useVirtualDeck,
 			teams: teamsData,
+			virtual_deck: useVirtualDeck,
 		}
 		const message = {
-			type: 'setup',
+			type: 'create_game',
 			data: data,
 		}
 		return message

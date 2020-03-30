@@ -6,13 +6,6 @@ export const setupWebsocket = (ipAddr, port, endpoint) => {
 
     // Assign the WebSocket callback functions
     socket.onopen = () => {
-        // var json = JSON.stringify({
-        //     type: 'handshake',
-        //     data: {
-        //         id: id.toString(),
-        //     },
-        // })
-        // socket.send(json)
         console.log(`WebSocket connected to ${ipAddr}:${port}`)
     }
 
