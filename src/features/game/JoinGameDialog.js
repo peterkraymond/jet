@@ -23,8 +23,9 @@ import {
 import _ from 'lodash'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getGamePin } from '../game/gameSlice'
-// import { getPlayerNames } from '../../redux/selectors'
+import { getGamePin, getPlayerNames } from './gameSlice'
+import { setCurrentView } from '../navigation/navigationSlice'
+import store from '../../store'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -47,8 +48,9 @@ export default function JoinGameDialog() {
 	const wsSend = useSendCb()
 
 	// get player names from datastore
-	// const allNames = useSelector(getPlayerNames)
-	const allNames = ['Player 0', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
+	const allNames = useSelector(getPlayerNames)
+	console.log(`allNames: ${allNames}`)
+	// const allNames = ['Player 0', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
 
 	// create state for modal dialog state
 	const [open, setOpen] = React.useState(false)
@@ -66,6 +68,7 @@ export default function JoinGameDialog() {
 	const handleClickOpen = () => {
 		// TODO: update all variables based on selectors
 		setPin(reduxGamePin)
+		setName(allNames[0])
 		setOpen(true)
 	}
 	const handleClose = evt => {
@@ -75,6 +78,8 @@ export default function JoinGameDialog() {
 			case 'Submit':
 				const message = compileMessage()
 				wsSend(message)
+				// update the view to now be on game-play
+				store.dispatch(setCurrentView('game-play'))
 				break
 			default:
 				break

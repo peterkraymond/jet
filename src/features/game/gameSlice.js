@@ -9,6 +9,7 @@ const gameSlice = createSlice({
       name: '',
       players: [],
     },
+    all_players: [],
     player: {
       identifier: '',
       cards: [],
@@ -41,4 +42,16 @@ Selectors
 */
 export function getGamePin(state) {
   return state.game.pin
+}
+
+export function getPlayerNames(state) {
+  return state.game.all_players
+}
+
+export function getTeams(state) {
+  if (Array.isArray(state.game.teams)) {
+    return state.game.teams
+  } else {
+    return [state.game.teams]
+  }
 }

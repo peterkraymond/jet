@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit'
 const navigationSlice = createSlice({
 	name: 'navigation',
 	initialState: {
-		view: 'landing',
+		view: 'landing', // landing, game-play, final-results
 	},
 	reducers: {
-		setNavigationView: {
+		setCurrentView: {
 			reducer: (state, action) => {
 				const { view } = action.payload
 				state.view = view
@@ -16,7 +16,7 @@ const navigationSlice = createSlice({
 	},
 })
 
-export const { setNavigationView } = navigationSlice.actions
+export const { setCurrentView } = navigationSlice.actions
 export default navigationSlice.reducer
 
 /*

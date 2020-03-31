@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
-import NewGameDialog from '../NewGameDialog/NewGameDialog'
-import JoinGameDialog from '../JoinGameDialog/JoinGameDialog'
+import NewGameDialog from '../game/NewGameDialog'
+import JoinGameDialog from '../game/JoinGameDialog'
+import Teams from '../game/Teams'
 
 import { useSelector } from 'react-redux'
 import { getCurrentView } from './navigationSlice'
@@ -26,10 +27,10 @@ function Navigation() {
 	const reduxCurrentView = useSelector(getCurrentView)
 	console.log(`Navigation.js: Current View: ${reduxCurrentView}`)
 
-	const [currentView, setCurrentView] = useState(reduxCurrentView)
+	// const [currentView, setCurrentView] = useState(reduxCurrentView)
 
 	let content
-	switch (currentView) {
+	switch (reduxCurrentView) {
 		case 'landing':
 			content = (
 				<Grid container spacing={3}>
@@ -43,10 +44,23 @@ function Navigation() {
 			)
 			break
 		case 'game-play':
-			content = 'Game Play' // <RegisterUserDialog />;
+			content = (
+				<Grid container spacing={3}>
+					<Grid item xs={12}>
+						<Teams />
+					</Grid>
+					<Grid item xs={12}>
+						{/*<MyPlayer />*/}
+						'MyPlayer'
+					</Grid>
+				</Grid>
+			)
+			break
+		case 'final-results':
+			content = 'Final Results'
 			break
 		default:
-			console.log(currentView, 'content is undefined')
+			console.log(reduxCurrentView, 'content is undefined')
 			content = 'Undefined'
 			break
 	}

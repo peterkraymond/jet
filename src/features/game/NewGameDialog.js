@@ -20,6 +20,8 @@ import {
 } from '@material-ui/core'
 import _ from 'lodash'
 import useSendCb from '../../hooks/useSendCb'
+import { setField } from './gameSlice'
+import store from '../../store'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -82,6 +84,8 @@ export default function NewGameDialog() {
 				// allUpdates.map(message => {
 				// 	wsSend(message)
 				// })
+				// TODO: this should be removed and more data should be returned with the create game message
+				store.dispatch(setField('all_players', players))
 				break
 			default:
 				break
