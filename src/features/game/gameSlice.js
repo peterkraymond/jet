@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// TODO: refactor to simplify number of reducers
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -12,25 +13,27 @@ const gameSlice = createSlice({
       identifier: '',
       cards: [],
     },
+    next_turn: '',
   },
   reducers: {
-    setPin: {
+    setField: {
       reducer: (state, action) => {
-        const { pin } = action.payload
-        state.pin = pin
+        const { field, data } = action.payload
+        state[field] = data
       },
-      prepare: pin => ({ payload: { pin } }),
+      prepare: (field, data) => ({ payload: { field, data } }),
     },
-    setTeams: {
+    setPlayerField: {
       reducer: (state, action) => {
-        const { teams } = action.payload
-        state.teams = teams
+        const { field, data } = action.payload
+        state.player[field] = data
       },
+      prepare: (field, data) => ({ payload: { field, data } }),
     },
   },
 })
 
-export const { setPin, setTeams } = gameSlice.actions
+export const { setField, setPlayerField } = gameSlice.actions
 export default gameSlice.reducer
 
 /*

@@ -52,7 +52,8 @@ export default function JoinGameDialog() {
 
 	// create state for modal dialog state
 	const [open, setOpen] = React.useState(false)
-	// TODO: create redux selector for pin
+
+	// use selector for game pin
 	const reduxGamePin = useSelector(getGamePin)
 	const [pin, setPin] = React.useState(reduxGamePin)
 	const [name, setName] = React.useState(allNames[0])
