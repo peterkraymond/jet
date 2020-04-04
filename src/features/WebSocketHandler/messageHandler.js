@@ -1,6 +1,7 @@
 import store from '../../store'
 import { setStatus } from './hwSlice'
 import { setField, setPlayerField } from '../game/gameSlice'
+import { setCurrentView } from '../navigation/navigationSlice'
 // import { setSocketStatus, setupGame, updateCards } from './actions'
 
 // Create function to handle all websocket / generic message sending communication
@@ -30,7 +31,22 @@ export const messageHandler = ({ type, event }) => {
 					}
 				}
 			}
-			// TODO: do I need to perform different updates based on message type?
+			// change the view based on the return message
+			if ('type' in onMessageData) {
+				switch (onMessageData.type) {
+					case 'created_game':
+						store.dispatch(setCurrentView('enter-pin'))
+						break
+					case 'joined_game':
+						store.dispatch(setCurrentView('select-player'))
+						break
+					case 'selected_player':
+						store.dispatch(setCurrentView('game-play'))
+						break
+					default:
+						break
+				}
+			}
 			break
 		case 'onError':
 			break

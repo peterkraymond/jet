@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
+import React from 'react'
 import './App.css'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import Navigation from './features/navigation/Navigation'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         textAlign: 'center',
@@ -18,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
     const classes = useStyles()
-    const theme = useTheme()
     return (
         <div>
             <Typography variant="h3" className={classes.title}>

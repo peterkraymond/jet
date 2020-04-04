@@ -13,25 +13,25 @@ export class WebSocketHandler {
     }
 
     // Assign WebSocket Callbacks
-    onOpen = received => {
+    onOpen = (received) => {
         console.log('onOpen: ')
         messageHandler({ type: 'onOpen', event: received })
     }
-    onMessage = received => {
+    onMessage = (received) => {
         console.log('onMessage: ')
         messageHandler({ type: 'onMessage', event: received })
     }
-    onError = received => {
+    onError = (received) => {
         console.log('onError: ')
         messageHandler({ type: 'onError', event: received })
     }
-    onClose = received => {
+    onClose = (received) => {
         console.log('onClose: ')
         messageHandler({ type: 'onClose', event: received })
     }
 
     // Create send message that will be called to transmit messages
-    onSend = JSONdata => {
+    onSend = (JSONdata) => {
         if (this.socket.readyState === 1) {
             this.socket.sendMessage(JSONdata)
             console.log('onSend: ')

@@ -45,7 +45,12 @@ export function getGamePin(state) {
 }
 
 export function getPlayerNames(state) {
-  return state.game.all_players
+  // return state.game.all_players
+  var players = []
+  if (Array.isArray(state.game.teams)) {
+    state.game.teams.map((team) => (players = [...players, ...team.players]))
+  }
+  return players
 }
 
 export function getTeams(state) {

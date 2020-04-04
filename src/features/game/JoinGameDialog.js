@@ -16,6 +16,9 @@ import {
 	MenuItem,
 	Paper,
 	Select,
+	Stepper,
+	Step,
+	StepLabel,
 	TextField,
 	Typography,
 	useMediaQuery,
@@ -27,7 +30,7 @@ import { getGamePin, getPlayerNames } from './gameSlice'
 import { setCurrentView } from '../navigation/navigationSlice'
 import store from '../../store'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		padding: theme.spacing(3, 2),
 		margin: theme.spacing(1),
@@ -41,11 +44,39 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1),
 		marginBottom: theme.spacing(1),
 	},
+	backButton: {
+		marginRight: theme.spacing(1),
+	},
+	instructions: {
+		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(1),
+	},
 }))
+
+function getSteps() {
+	return ['Enter Game Pin', 'Select Player']
+}
 
 export default function JoinGameDialog() {
 	const classes = useStyles()
 	const wsSend = useSendCb()
+
+	// stepper state
+	const [activeStep, setActiveStep] = React.useState(0)
+	const steps = getSteps()
+
+	// stepper callbacks
+	const handleNext = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep + 1)
+	}
+
+	const handleBack = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep - 1)
+	}
+
+	const handleReset = () => {
+		setActiveStep(0)
+	}
 
 	// get player names from datastore
 	const allNames = useSelector(getPlayerNames)
@@ -71,7 +102,7 @@ export default function JoinGameDialog() {
 		setName(allNames[0])
 		setOpen(true)
 	}
-	const handleClose = evt => {
+	const handleClose = (evt) => {
 		switch (evt.currentTarget.value) {
 			case 'Cancel':
 				break
@@ -79,7 +110,7 @@ export default function JoinGameDialog() {
 				const message = compileMessage()
 				wsSend(message)
 				// update the view to now be on game-play
-				store.dispatch(setCurrentView('game-play'))
+				store.dispatch(setCurrentView('select-player'))
 				break
 			default:
 				break
@@ -87,7 +118,7 @@ export default function JoinGameDialog() {
 		setOpen(false)
 	}
 	// handle changing of parameters for react state
-	const handleChange = name => evt => {
+	const handleChange = (name) => (evt) => {
 		switch (name) {
 			case 'pin':
 				setPin(Number(evt.target.value))
@@ -115,27 +146,16 @@ export default function JoinGameDialog() {
 			type: 'connect_to_game',
 			data: {
 				pin: pin,
-				name: name,
 			},
 		}
 		return message
 	}
 
-	return (
-		<div>
-			<Button variant="outlined" color="primary" onClick={handleClickOpen}>
-				Join Existing Game
-			</Button>
-			<Dialog
-				fullScreen={fullScreen}
-				maxWidth={'md'}
-				fullWidth={true}
-				open={open}
-				onClose={handleClose}
-			>
-				<DialogTitle id="form-dialog-title">Join Game</DialogTitle>
-				<DialogContent>
-					<Paper className={classes.root}>
+	const getStepContent = (stepIndex) => {
+		switch (stepIndex) {
+			case 0:
+				return (
+					<Paper>
 						<Grid container direction="row" spacing={3}>
 							<Grid item sm={6}>
 								<Typography>Game Pin </Typography>
@@ -144,10 +164,17 @@ export default function JoinGameDialog() {
 									onChange={handleChange('pin')}
 								/>
 							</Grid>
+						</Grid>
+					</Paper>
+				)
+			case 1:
+				return (
+					<Paper>
+						<Grid container direction="row" spacing={3}>
 							<Grid item>
 								<Typography>Player </Typography>
 								<Select fullWidth value={name} onChange={handleChange('player')}>
-									{allNames.map(player => (
+									{allNames.map((player) => (
 										<MenuItem key={player} value={player}>
 											{player}
 										</MenuItem>
@@ -156,16 +183,49 @@ export default function JoinGameDialog() {
 							</Grid>
 						</Grid>
 					</Paper>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose} color="primary" value="Cancel">
-						Cancel
-					</Button>
-					<Button onClick={handleClose} color="primary" value="Submit">
-						Submit
-					</Button>
-				</DialogActions>
-			</Dialog>
+				)
+			default:
+				return 'Unknown stepIndex'
+		}
+	}
+
+	return (
+		<div className={classes.root}>
+			<Stepper activeStep={activeStep} alternativeLabel>
+				{steps.map((label) => (
+					<Step key={label}>
+						<StepLabel>{label}</StepLabel>
+					</Step>
+				))}
+			</Stepper>
+			<div>
+				{activeStep === steps.length ? (
+					<div>
+						<Typography className={classes.instructions}>
+							All steps completed
+						</Typography>
+						<Button onClick={handleReset}>Reset</Button>
+					</div>
+				) : (
+					<div>
+						<Typography className={classes.instructions}>
+							{getStepContent(activeStep)}
+						</Typography>
+						<div>
+							<Button
+								disabled={activeStep === 0}
+								onClick={handleBack}
+								className={classes.backButton}
+							>
+								Back
+							</Button>
+							<Button variant="contained" color="primary" onClick={handleNext}>
+								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+							</Button>
+						</div>
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }
