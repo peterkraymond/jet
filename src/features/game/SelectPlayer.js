@@ -81,7 +81,7 @@ export default function SelectPlayer() {
 			<Paper className={classes.root}>
 				<Grid item>
 					<Typography>Player </Typography>
-					<Select fullWidth value={name} onChange={handleChange('player')}>
+					<Select value={name} onChange={handleChange('player')}>
 						{allNames.map((player) => (
 							<MenuItem key={player} value={player}>
 								{player}

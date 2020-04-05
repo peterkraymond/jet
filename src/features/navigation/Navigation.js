@@ -5,10 +5,18 @@ import { Grid } from '@material-ui/core'
 import NewGame from '../game/NewGame'
 import EnterPin from '../game/EnterPin'
 import SelectPlayer from '../game/SelectPlayer'
+import MostRecentTurn from '../game/MostRecentTurn'
+import EnterTurn from '../game/EnterTurn'
 import Teams from '../game/Teams'
+import Player from '../game/Player'
 
 import { useSelector } from 'react-redux'
 import { getCurrentView } from './navigationSlice'
+
+// pull in for testing
+import useSendCb from '../../hooks/useSendCb'
+// load test messages
+import { createGameMessage, enterPinMessage, selectPlayerMessage } from '../game/TestMessages'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -25,6 +33,9 @@ export default function Navigation() {
 	const classes = useStyles()
 	const theme = useTheme()
 
+	// pull out wsSend capability for testing
+	const wsSend = useSendCb()
+
 	const reduxCurrentView = useSelector(getCurrentView)
 	console.log(`Navigation.js: Current View: ${reduxCurrentView}`)
 
@@ -32,6 +43,8 @@ export default function Navigation() {
 
 	let content
 	switch (reduxCurrentView) {
+		case 'no-ws-connection':
+			content = 'No WS Connected'
 		case 'create-game':
 			// TODO: Convert to stepper to include
 			// 1. new game
@@ -46,6 +59,8 @@ export default function Navigation() {
 					</Grid>
 				</Grid>
 			)
+			// load test messages
+			wsSend(createGameMessage)
 			break
 		case 'enter-pin':
 			content = (
@@ -55,6 +70,7 @@ export default function Navigation() {
 					</Grid>
 				</Grid>
 			)
+			wsSend(enterPinMessage)
 			break
 		case 'select-player':
 			content = (
@@ -64,6 +80,7 @@ export default function Navigation() {
 					</Grid>
 				</Grid>
 			)
+			wsSend(selectPlayerMessage)
 			break
 		case 'game-play':
 			content = (
@@ -72,8 +89,13 @@ export default function Navigation() {
 						<Teams />
 					</Grid>
 					<Grid item xs={12}>
-						{/*<MyPlayer />*/}
-						'MyPlayer'
+						<Player />
+					</Grid>
+					<Grid item xs={12}>
+						<MostRecentTurn />
+					</Grid>
+					<Grid item xs={12}>
+						<EnterTurn />
 					</Grid>
 				</Grid>
 			)
@@ -89,4 +111,3 @@ export default function Navigation() {
 
 	return <div className={classes.root}>{content}</div>
 }
-

@@ -12,6 +12,7 @@ const gameSlice = createSlice({
     all_players: [],
     player: {
       identifier: '',
+      name: '',
       cards: [],
     },
     next_turn: '',
@@ -44,6 +45,7 @@ export function getGamePin(state) {
   return state.game.pin
 }
 
+// TODO: rename to getallplayers?
 export function getPlayerNames(state) {
   // return state.game.all_players
   var players = []
@@ -53,10 +55,33 @@ export function getPlayerNames(state) {
   return players
 }
 
+export function getOpponents(state) {
+  var opponents = []
+  // check if the player is a member of team 0 or team 1 and return the opposing team players
+  if (state.game.teams[0].players.includes(state.game.player.identifier)) {
+    opponents = state.game.teams[1].players
+  } else {
+    opponents = state.game.teams[0].players
+  }
+  return opponents
+}
+
+export function getCards(state) {
+  return state.game.player.cards
+}
+
 export function getTeams(state) {
   if (Array.isArray(state.game.teams)) {
     return state.game.teams
   } else {
     return [state.game.teams]
   }
+}
+
+export function getPlayerName(state) {
+  return state.game.player.name
+}
+
+export function getPlayerId(state) {
+  return state.game.player.identifier
 }

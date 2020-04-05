@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const navigationSlice = createSlice({
 	name: 'navigation',
 	initialState: {
-		view: 'create-game', // create-game, enter-pin, select-player, game-play, final-results
+		view: 'no-ws-connection', // no-ws-connection, create-game, enter-pin, select-player, game-play, final-results
 	},
 	reducers: {
 		setCurrentView: {

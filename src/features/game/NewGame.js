@@ -145,7 +145,7 @@ export default function NewGame() {
 	return (
 		<div>
 			<Paper className={classes.root}>
-				<Typography>Details for New Game</Typography>
+				<Typography variant="h4">Game Setup:</Typography>
 
 				<Typography>Team 1</Typography>
 				<Grid container spacing={3}>

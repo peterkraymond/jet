@@ -9,6 +9,7 @@ export const messageHandler = ({ type, event }) => {
 	switch (type) {
 		case 'onOpen':
 			store.dispatch(setStatus(true))
+			store.dispatch(setCurrentView('create-game'))
 			break
 		case 'onMessage':
 			const onMessageData = JSON.parse(event.data)
@@ -23,6 +24,7 @@ export const messageHandler = ({ type, event }) => {
 							store.dispatch(setField(property, onMessageData.data[property]))
 							break
 						case 'identifier':
+						case 'name':
 						case 'cards':
 							store.dispatch(setPlayerField(property, onMessageData.data[property]))
 							break

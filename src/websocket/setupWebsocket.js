@@ -9,19 +9,18 @@ export const setupWebsocket = (ipAddr, port, endpoint) => {
         console.log(`WebSocket connected to ${ipAddr}:${port}`)
     }
 
-    socket.onmessage = event => {
+    socket.onmessage = (event) => {
         // keep it frosty
     }
 
-    socket.sendMessage = message => {
+    socket.sendMessage = (message) => {
         // append the clients id to sending messages so that they can be uniquely identified
         message['id'] = id
-        console.log(`Message addition: ${message}`)
         var json = JSON.stringify(message)
         socket.send(json)
     }
 
-    socket.onerror = error => {
+    socket.onerror = (error) => {
         console.log(`WebSocket error: ${error}`)
     }
 

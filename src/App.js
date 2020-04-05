@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles()
+
     return (
         <div>
             <Typography variant="h3" className={classes.title}>
