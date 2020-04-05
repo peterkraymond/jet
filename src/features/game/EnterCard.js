@@ -31,12 +31,7 @@ export default function EnterCard({ value, handleChange }) {
 	return (
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
-				<TextField
-					id="standard-basic"
-					label="Standard"
-					value={value}
-					onChange={handleChange}
-				/>
+				<TextField id="standard-basic" label="Card" value={value} onChange={handleChange} />
 			</form>
 		</div>
 	)
