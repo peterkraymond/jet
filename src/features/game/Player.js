@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, TextField, Typography } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getCards } from './gameSlice'
+import { getCards, getSetsWithCards } from './gameSlice'
 import { setCurrentView } from '../navigation/navigationSlice'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,22 +29,21 @@ export default function Player() {
 	const classes = useStyles()
 
 	// pull out the cards - these will be sorted by the selector
+	const sets = useSelector(getSetsWithCards)
 	const cards = useSelector(getCards)
 
 	return (
-		<div>
+		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Player Data:
 			</Typography>
 
 			<Grid container spacing={3}>
-				<Grid item xs={1}>
-					{cards.map((card) => (
-						<CardDisplay key={card} label={card} />
-					))}
-				</Grid>
+				{cards.map((card) => (
+					<CardDisplay key={card} label={card} />
+				))}
 			</Grid>
-		</div>
+		</Paper>
 	)
 }
 

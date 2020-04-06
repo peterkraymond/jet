@@ -20,7 +20,10 @@ export const messageHandler = ({ type, event }) => {
 					switch (property) {
 						case 'pin':
 						case 'next_turn':
+						case 'player':
 						case 'teams':
+						case 'last_turn':
+						case 'next_turn':
 							store.dispatch(setField(property, onMessageData.data[property]))
 							break
 						case 'identifier':

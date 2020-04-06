@@ -45,7 +45,12 @@ export default function AskPlayer({ allOptions, value, handleChange }) {
 					onChange={handleChange}
 				>
 					{allOptions.map((opponent) => (
-						<FormControlLabel value={opponent} control={<Radio />} label={opponent} />
+						<FormControlLabel
+							key={opponent}
+							value={opponent}
+							control={<Radio />}
+							label={opponent}
+						/>
 					))}
 				</RadioGroup>
 			</FormControl>

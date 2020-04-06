@@ -89,10 +89,10 @@ export default function Navigation() {
 						<Teams />
 					</Grid>
 					<Grid item xs={12}>
-						<Player />
+						<MostRecentTurn />
 					</Grid>
 					<Grid item xs={12}>
-						<MostRecentTurn />
+						<Player />
 					</Grid>
 					<Grid item xs={12}>
 						<EnterTurn />

@@ -65,28 +65,28 @@ export default function EnterTurn() {
 	// const mostRecentTurn = useSelector(getMostRecentTurn)
 
 	return (
-		<div>
+		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Enter Turn:
 			</Typography>
 
-			<Grid container>
-				<Grid item xs={4}>
+			<Grid container justify="center" alignItems="center">
+				<Grid item xs={3}>
 					<AskPlayer
 						allOptions={allOpponents}
 						value={opponent}
 						handleChange={selectOpponent}
 					/>
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={3}>
 					<EnterCard value={card} handleChange={selectCard} />
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={3}>
 					<Button variant="contained" color="primary" onClick={enterTurn}>
 						Submit Question
 					</Button>
 				</Grid>
 			</Grid>
-		</div>
+		</Paper>
 	)
 }

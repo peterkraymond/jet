@@ -32,7 +32,7 @@ export default function MostRecentTurn() {
 	// const mostRecentTurn = useSelector(getMostRecentTurn)
 
 	return (
-		<div>
+		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Most Recent Turn:
 			</Typography>
@@ -42,6 +42,6 @@ export default function MostRecentTurn() {
 					'Most recent turn information goes here.'
 				</Grid>
 			</Grid>
-		</div>
+		</Paper>
 	)
 }

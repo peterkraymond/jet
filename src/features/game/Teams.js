@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		padding: theme.spacing(3),
 	},
+	autoSpace: {
+		flexGrow: 1,
+	},
 }))
 
 export default function Teams() {
@@ -51,33 +54,35 @@ export default function Teams() {
 	const teams = useSelector(getTeams)
 
 	return (
-		<div>
+		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Teams:
 			</Typography>
 
-			<Grid container spacing={3}>
+			<Grid container spacing={3} className={classes.autoSpace}>
 				{teams.map((team) => (
 					<TeamDiv key={team.name} team={team} />
 				))}
 			</Grid>
-		</div>
+		</Paper>
 	)
 }
 
 const TeamDiv = (props) => (
 	<Grid item sm={6}>
 		<Paper>
-			<Typography>{props.team.name}</Typography>
-			{props.team.players.map((player) => (
-				<TeamPlayer key={player} player={player} />
-			))}
+			<Typography variant="h5">{props.team.name}</Typography>
+			<Grid container spacing={2}>
+				{props.team.players.map((player) => (
+					<TeamPlayer key={player} player={player} />
+				))}
+			</Grid>
 		</Paper>
 	</Grid>
 )
 
 const TeamPlayer = (props) => (
-	<Grid item xs={2}>
+	<Grid item xs>
 		{props.player}
 	</Grid>
 )

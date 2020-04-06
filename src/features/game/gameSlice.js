@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// TODO: refactor to simplify number of reducers
 const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -14,6 +13,10 @@ const gameSlice = createSlice({
       identifier: '',
       name: '',
       cards: [],
+    },
+    last_turn: {
+      type: '',
+      data: {},
     },
     next_turn: '',
   },
@@ -66,8 +69,19 @@ export function getOpponents(state) {
   return opponents
 }
 
+export function getSetsWithCards(state) {
+  var sets = []
+  const suits = ['c', 'd', 'h', 's']
+  const low = ['2', '3', '4', '5', '6', '7']
+  const high = ['9', '10', 'j', 'q', 'k', 'a']
+  // put in logic to divide player cards into known sets
+  return sets
+}
+
 export function getCards(state) {
-  return state.game.player.cards
+  var cards = state.game.player.cards
+  // TODO: sort cards
+  return cards
 }
 
 export function getTeams(state) {
