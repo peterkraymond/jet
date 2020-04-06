@@ -1,8 +1,10 @@
 import store from '../../store'
 import { setStatus } from './hwSlice'
 import { setField, setPlayerField } from '../game/gameSlice'
-import { setCurrentView } from '../navigation/navigationSlice'
+import { setCurrentView, getCurrentView } from '../navigation/navigationSlice'
 // import { setSocketStatus, setupGame, updateCards } from './actions'
+
+var set_view = ''
 
 // Create function to handle all websocket / generic message sending communication
 export const messageHandler = ({ type, event }) => {
@@ -40,13 +42,23 @@ export const messageHandler = ({ type, event }) => {
 			if ('type' in onMessageData) {
 				switch (onMessageData.type) {
 					case 'created_game':
-						store.dispatch(setCurrentView('enter-pin'))
+						set_view = 'enter-pin'
+						store.dispatch(setCurrentView(set_view))
 						break
 					case 'joined_game':
-						store.dispatch(setCurrentView('select-player'))
+						set_view = 'select-player'
+						store.dispatch(setCurrentView(set_view))
 						break
 					case 'selected_player':
-						store.dispatch(setCurrentView('game-play'))
+						set_view = 'game-play'
+						store.dispatch(setCurrentView(set_view))
+						break
+					case 'game_update':
+						// set the view to game play if it is not currently
+						if (set_view != 'game-play') {
+							set_view = 'game-play'
+							store.dispatch(setCurrentView(set_view))
+						}
 						break
 					default:
 						break

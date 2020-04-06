@@ -74,7 +74,7 @@ const TeamDiv = (props) => (
 			<Typography variant="h5">{props.team.name}</Typography>
 			<Grid container spacing={2}>
 				{props.team.players.map((player) => (
-					<TeamPlayer key={player} player={player} />
+					<TeamPlayer key={player.name} player={player} />
 				))}
 			</Grid>
 		</Paper>
@@ -83,6 +83,6 @@ const TeamDiv = (props) => (
 
 const TeamPlayer = (props) => (
 	<Grid item xs>
-		{props.player}
+		{props.player.name}
 	</Grid>
 )

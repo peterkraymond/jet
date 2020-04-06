@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Button, Grid, MenuItem, Paper, Select, Typography } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getPlayerNames } from './gameSlice'
+import { getAllPlayers } from './gameSlice'
 import { setCurrentView } from '../navigation/navigationSlice'
 import store from '../../store'
 
@@ -35,10 +35,11 @@ export default function SelectPlayer() {
 	const wsSend = useSendCb()
 
 	// get player names from datastore
-	const allNames = useSelector(getPlayerNames)
+	// TODO: update this to get names correctly from what is now an object in the datastore
+	const allPlayers = useSelector(getAllPlayers)
 
 	// create state to track player selected
-	const [name, setName] = React.useState(allNames[0])
+	const [name, setName] = React.useState(allPlayers[0].name)
 
 	// handle submit to next window
 	const handleClose = (evt) => {
@@ -82,9 +83,9 @@ export default function SelectPlayer() {
 				<Grid item>
 					<Typography>Player </Typography>
 					<Select value={name} onChange={handleChange('player')}>
-						{allNames.map((player) => (
-							<MenuItem key={player} value={player}>
-								{player}
+						{allPlayers.map((player) => (
+							<MenuItem key={player.name} value={player.name}>
+								{player.name}
 							</MenuItem>
 						))}
 					</Select>

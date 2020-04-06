@@ -49,7 +49,8 @@ export function getGamePin(state) {
 }
 
 // TODO: rename to getallplayers?
-export function getPlayerNames(state) {
+// TODO: fix this in communication with new backend
+export function getAllPlayers(state) {
   // return state.game.all_players
   var players = []
   if (Array.isArray(state.game.teams)) {
