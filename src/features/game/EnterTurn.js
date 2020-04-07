@@ -36,7 +36,7 @@ export default function EnterTurn() {
 
 	// state and callbacks for selction of opponent
 	const allOpponents = useSelector(getOpponents)
-	const [opponent, setOpponent] = React.useState(allOpponents[0])
+	const [opponent, setOpponent] = React.useState(allOpponents[0].name)
 	const selectOpponent = (event) => {
 		setOpponent(event.target.value)
 	}

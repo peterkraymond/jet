@@ -62,7 +62,7 @@ export function getAllPlayers(state) {
 export function getOpponents(state) {
   var opponents = []
   // check if the player is a member of team 0 or team 1 and return the opposing team players
-  if (state.game.teams[0].players.includes(state.game.player.identifier)) {
+  if (state.game.teams[0].players.some((teamPlayer) => teamPlayer.name == state.game.player.name)) {
     opponents = state.game.teams[1].players
   } else {
     opponents = state.game.teams[0].players
