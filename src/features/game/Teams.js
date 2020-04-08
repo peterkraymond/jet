@@ -54,24 +54,21 @@ export default function Teams() {
 	const teams = useSelector(getTeams)
 
 	return (
-		<Paper className={classes.root}>
-			<Typography variant="h4" className={classes.title}>
-				Teams:
-			</Typography>
-
+		<div className={classes.root}>
 			<Grid container spacing={3} className={classes.autoSpace}>
 				{teams.map((team) => (
 					<TeamDiv key={team.name} team={team} />
 				))}
 			</Grid>
-		</Paper>
+		</div>
 	)
 }
 
 const TeamDiv = (props) => (
 	<Grid item sm={6}>
 		<Paper>
-			<Typography variant="h5">{props.team.name}</Typography>
+			<Typography variant="h4">{props.team.name}</Typography>
+			<Typography variant="h6">Sets Won: {props.team.set_count}</Typography>
 			<Grid container spacing={2}>
 				{props.team.players.map((player) => (
 					<TeamPlayer key={player.name} player={player} />
@@ -83,6 +80,7 @@ const TeamDiv = (props) => (
 
 const TeamPlayer = (props) => (
 	<Grid item xs>
-		{props.player.name}
+		<Typography variant="h5">{props.player.name}</Typography>
+		<Typography>Card Count: {props.player.card_count}</Typography>
 	</Grid>
 )

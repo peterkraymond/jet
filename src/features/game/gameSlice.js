@@ -41,15 +41,16 @@ const gameSlice = createSlice({
 export const { setField, setPlayerField } = gameSlice.actions
 export default gameSlice.reducer
 
-/*
-Selectors
-*/
+/***************
+ ** Selectors **
+ ***************/
 export function getGamePin(state) {
   return state.game.pin
 }
 
-// TODO: rename to getallplayers?
-// TODO: fix this in communication with new backend
+/*
+ ** Team Information
+ */
 export function getAllPlayers(state) {
   // return state.game.all_players
   var players = []
@@ -70,6 +71,25 @@ export function getOpponents(state) {
   return opponents
 }
 
+export function getTeams(state) {
+  if (Array.isArray(state.game.teams)) {
+    return state.game.teams
+  } else {
+    return [state.game.teams]
+  }
+}
+
+/*
+ ** Player Information
+ */
+export function getPlayerName(state) {
+  return state.game.player.name
+}
+
+export function getPlayerId(state) {
+  return state.game.player.identifier
+}
+
 export function getSetsWithCards(state) {
   var sets = []
   const suits = ['c', 'd', 'h', 's']
@@ -85,18 +105,9 @@ export function getCards(state) {
   return cards
 }
 
-export function getTeams(state) {
-  if (Array.isArray(state.game.teams)) {
-    return state.game.teams
-  } else {
-    return [state.game.teams]
-  }
-}
-
-export function getPlayerName(state) {
-  return state.game.player.name
-}
-
-export function getPlayerId(state) {
-  return state.game.player.identifier
+/*
+ ** Last Turn Information
+ */
+export function getLastTurn(state) {
+  return state.game.last_turn
 }
