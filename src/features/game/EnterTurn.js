@@ -4,7 +4,7 @@ import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
 import { getCards, getOpponents, getPlayerId, getPlayerName } from './gameSlice'
-import AskPlayer from './AskPlayer'
+import RadioPlayers from './RadioPlayers'
 import EnterCard from './EnterCard'
 import { setCurrentView } from '../navigation/navigationSlice'
 
@@ -70,9 +70,11 @@ export default function EnterTurn() {
 				Enter Turn:
 			</Typography>
 
+			{/* Code for Entering Turn */}
 			<Grid container justify="center" alignItems="center">
 				<Grid item xs={3}>
-					<AskPlayer
+					<RadioPlayers
+						label="Opponents"
 						allOptions={allOpponents}
 						value={opponent}
 						handleChange={selectOpponent}
@@ -86,6 +88,11 @@ export default function EnterTurn() {
 						Submit Question
 					</Button>
 				</Grid>
+			</Grid>
+
+			{/* Code for Entering Declaration */}
+			<Grid container justify="center" alignItems="center">
+				<Grid item xs={2}></Grid>
 			</Grid>
 		</Paper>
 	)

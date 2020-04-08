@@ -7,6 +7,7 @@ import EnterPin from '../game/EnterPin'
 import SelectPlayer from '../game/SelectPlayer'
 import MostRecentTurn from '../game/MostRecentTurn'
 import EnterTurn from '../game/EnterTurn'
+import EnterDeclaration from '../game/EnterDeclaration'
 import Teams from '../game/Teams'
 import Player from '../game/Player'
 
@@ -96,6 +97,9 @@ export default function Navigation() {
 					</Grid>
 					<Grid item xs={12}>
 						<EnterTurn />
+					</Grid>
+					<Grid item xs={12}>
+						<EnterDeclaration />
 					</Grid>
 				</Grid>
 			)

@@ -71,6 +71,17 @@ export function getOpponents(state) {
   return opponents
 }
 
+export function getTeammates(state) {
+  var teammates = []
+  // check if the player is a member of team 0 or team 1 and return all team players
+  if (state.game.teams[0].players.some((teamPlayer) => teamPlayer.name == state.game.player.name)) {
+    teammates = state.game.teams[0].players
+  } else {
+    teammates = state.game.teams[1].players
+  }
+  return teammates
+}
+
 export function getTeams(state) {
   if (Array.isArray(state.game.teams)) {
     return state.game.teams
@@ -110,4 +121,39 @@ export function getCards(state) {
  */
 export function getLastTurn(state) {
   return state.game.last_turn
+}
+
+/*
+ ** Get Static Sets
+ */
+export function getCardsForSet(setName) {
+  switch (setName) {
+    case 'low_spades':
+      return ['2s', '3s', '4s', '5s', '6s', '7s']
+      break
+    case 'high_spades':
+      return ['9s', '10s', 'js', 'qs', 'ks', 'as']
+      break
+    case 'low_diamonds':
+      return ['2d', '3d', '4d', '5d', '6d', '7d']
+      break
+    case 'high_diamonds':
+      return ['9d', '10d', 'jd', 'qd', 'kd', 'ad']
+      break
+    case 'low_clubs':
+      return ['2c', '3c', '4c', '5c', '6c', '7c']
+      break
+    case 'high_clubs':
+      return ['9c', '10c', 'jc', 'qc', 'kc', 'ac']
+      break
+    case 'low_hearts':
+      return ['2h', '3h', '4h', '5h', '6h', '7h']
+      break
+    case 'high_hearts':
+      return ['9h', '10h', 'jh', 'qh', 'kh', 'ah']
+      break
+    default:
+      return []
+      break
+  }
 }
