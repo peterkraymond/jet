@@ -3,7 +3,14 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getCards, getTeammates, getPlayerId, getPlayerName, getCardsForSet } from './gameSlice'
+import {
+	getCards,
+	getTeammates,
+	getPlayerId,
+	getPlayerName,
+	getCardsForSet,
+	getNextTurnPlayer,
+} from './gameSlice'
 import AskPlayer from './AskPlayer'
 import EnterCard from './EnterCard'
 import SelectOption from './SelectOption'
@@ -36,6 +43,8 @@ export default function EnterDeclaration() {
 
 	const playerId = useSelector(getPlayerId)
 	const playerName = useSelector(getPlayerName)
+
+	const nextTurnPlayer = useSelector(getNextTurnPlayer)
 
 	// state and callbacks for selecting a set
 	const allSets = [
@@ -91,7 +100,7 @@ export default function EnterDeclaration() {
 	// pull out the cards - these will be sorted by the selector
 	// const mostRecentTurn = useSelector(getMostRecentTurn)
 
-	return (
+	return nextTurnPlayer == playerName ? (
 		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Enter Declaration:
@@ -124,6 +133,8 @@ export default function EnterDeclaration() {
 				</Grid>
 			</Grid>
 		</Paper>
+	) : (
+		<div />
 	)
 }
 

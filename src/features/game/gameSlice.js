@@ -124,6 +124,13 @@ export function getLastTurn(state) {
 }
 
 /*
+ ** Next Turn Player
+ */
+export function getNextTurnPlayer(state) {
+  return state.game.next_turn
+}
+
+/*
  ** Get Static Sets
  */
 export function getCardsForSet(setName) {

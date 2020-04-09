@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getCards, getOpponents, getPlayerId, getPlayerName } from './gameSlice'
+import { getCards, getOpponents, getPlayerId, getPlayerName, getNextTurnPlayer } from './gameSlice'
 import RadioPlayers from './RadioPlayers'
 import EnterCard from './EnterCard'
 import { setCurrentView } from '../navigation/navigationSlice'
@@ -34,6 +34,8 @@ export default function EnterTurn() {
 	const playerId = useSelector(getPlayerId)
 	const playerName = useSelector(getPlayerName)
 
+	const nextTurnPlayer = useSelector(getNextTurnPlayer)
+
 	// state and callbacks for selction of opponent
 	const allOpponents = useSelector(getOpponents)
 	const [opponent, setOpponent] = React.useState(allOpponents[0].name)
@@ -59,12 +61,13 @@ export default function EnterTurn() {
 			},
 		}
 		wsSend(message)
+		setCard('')
 	}
 
 	// pull out the cards - these will be sorted by the selector
 	// const mostRecentTurn = useSelector(getMostRecentTurn)
 
-	return (
+	return nextTurnPlayer == playerName ? (
 		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
 				Enter Turn:
@@ -95,5 +98,7 @@ export default function EnterTurn() {
 				<Grid item xs={2}></Grid>
 			</Grid>
 		</Paper>
+	) : (
+		<div />
 	)
 }
