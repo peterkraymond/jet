@@ -1,12 +1,12 @@
 export const id = Math.floor(Math.random() * 1000000 + 1)
 
-export const setupWebsocket = (ipAddr, port, endpoint) => {
+export const setupWebsocket = (url, endpoint) => {
     // create the WebSocket object
-    const socket = new WebSocket(`ws://${ipAddr}:${port}/${endpoint}`)
+    const socket = new WebSocket(`ws://${url}/${endpoint}`)
 
     // Assign the WebSocket callback functions
     socket.onopen = () => {
-        console.log(`WebSocket connected to ${ipAddr}:${port}`)
+        console.log(`WebSocket connected to ${url}`)
     }
 
     socket.onmessage = (event) => {

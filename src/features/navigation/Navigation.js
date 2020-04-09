@@ -61,7 +61,7 @@ export default function Navigation() {
 				</Grid>
 			)
 			// load test messages
-			wsSend(createGameMessage)
+			// wsSend(createGameMessage)
 			break
 		case 'enter-pin':
 			content = (
@@ -71,7 +71,7 @@ export default function Navigation() {
 					</Grid>
 				</Grid>
 			)
-			wsSend(enterPinMessage)
+			// wsSend(enterPinMessage)
 			break
 		case 'select-player':
 			content = (
@@ -81,7 +81,7 @@ export default function Navigation() {
 					</Grid>
 				</Grid>
 			)
-			wsSend(selectPlayerMessage)
+			// wsSend(selectPlayerMessage)
 			break
 		case 'game-play':
 			content = (
