@@ -74,8 +74,6 @@ export default function EnterDeclaration() {
 		])
 	}
 
-	console.debug(`DeclarePlayers: ${declarePlayers}`)
-
 	// callback to enter declaration to server
 	const enterDeclaration = () => {
 		const delcarationCards = getCardsForSet(declarationSet)

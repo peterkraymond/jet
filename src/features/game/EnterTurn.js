@@ -46,7 +46,7 @@ export default function EnterTurn() {
 	// state and callbacks for entering card
 	const [card, setCard] = React.useState('')
 	const selectCard = (event) => {
-		setCard(event.target.value)
+		setCard(event.target.value.toLowerCase())
 	}
 
 	// callback to enter question to server

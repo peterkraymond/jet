@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, TextField, Typography } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getCards, getLastTurn } from './gameSlice'
+import { getCards, getLastTurn, getNextTurnPlayer } from './gameSlice'
 import { setCurrentView } from '../navigation/navigationSlice'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,28 +29,30 @@ export default function MostRecentTurn() {
 	const classes = useStyles()
 
 	const last_turn = useSelector(getLastTurn)
+	const next_turn = useSelector(getNextTurnPlayer)
 
 	let content
 	switch (last_turn['type']) {
 		case 'turn':
 			// QUESTIONER asked for/received the CARD from RESPONDENT
 			content = (
-				<Typography>
+				<Typography variant="h6">
 					{last_turn['data']['questioner']}
-					{last_turn['data']['outcome'] ? ' received the ' : ' asked for the '}
+					{last_turn['data']['outcome'] ? ' RECEIVED the ' : ' ASKED for the '}
 					{last_turn['data']['card']}
 					{' from '}
 					{last_turn['data']['respondent']}
+					{last_turn['data']['outcome'] ? '' : ', but did NOT receive it'}
 				</Typography>
 			)
 			break
 		case 'declaration':
 			content = (
-				<Typography>
+				<Typography variant="h6">
 					{last_turn['data']['player']}
 					{last_turn['data']['outcome']
-						? ' successfully declared the '
-						: ' failed to declare the '}
+						? ' SUCCESSFULLY declared the '
+						: ' FAILED to declare the '}
 					{last_turn['data']['card_set']}
 				</Typography>
 			)
@@ -66,12 +68,17 @@ export default function MostRecentTurn() {
 	return (
 		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
-				Most Recent Turn:
+				Turn Info:
 			</Typography>
 
 			<Grid container spacing={3}>
-				<Grid item xs={12}>
+				<Grid item xs={9}>
+					<Typography variant="h5">Last Turn: </Typography>
 					{content}
+				</Grid>
+				<Grid item xs={3}>
+					<Typography variant="h5">Next Up: </Typography>
+					<Typography>{next_turn}</Typography>
 				</Grid>
 			</Grid>
 		</Paper>
