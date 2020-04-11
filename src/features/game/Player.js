@@ -39,8 +39,8 @@ export default function Player() {
 			</Typography>
 
 			<Grid container spacing={3}>
-				{cards.map((card) => (
-					<CardDisplay key={card} label={card} />
+				{Object.keys(sets).map((set) => (
+					<SetDisplay key={set} sets={sets} idx={set} />
 				))}
 			</Grid>
 		</Paper>
@@ -50,5 +50,16 @@ export default function Player() {
 const CardDisplay = (props) => (
 	<Grid key={props} item>
 		{props.label}
+	</Grid>
+)
+
+const SetDisplay = (props) => (
+	<Grid key={props} item>
+		{props.sets[props.idx].length ? <Typography>{props.idx.toUpperCase()}</Typography> : ''}
+		{props.sets[props.idx].map((card) => (
+			<Grid key={card} item>
+				<CardDisplay key={card} label={card} />
+			</Grid>
+		))}
 	</Grid>
 )

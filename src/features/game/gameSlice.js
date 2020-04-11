@@ -102,11 +102,57 @@ export function getPlayerId(state) {
 }
 
 export function getSetsWithCards(state) {
-  var sets = []
+  var sets = {
+    low_spades: [],
+    low_diamonds: [],
+    low_clubs: [],
+    low_hearts: [],
+    high_spades: [],
+    high_diamonds: [],
+    high_clubs: [],
+    high_hearts: [],
+  }
   const suits = ['c', 'd', 'h', 's']
   const low = ['2', '3', '4', '5', '6', '7']
   const high = ['9', '10', 'j', 'q', 'k', 'a']
   // put in logic to divide player cards into known sets
+
+  // pull out players cards
+  var playerCards = state.game.player.cards
+  playerCards.map((playerCard) => {
+    var cardSuit = playerCard.match('[sdch]')
+    var cardSuitKey = ''
+
+    switch (cardSuit[0]) {
+      case 'c':
+        cardSuitKey = 'clubs'
+        break
+      case 'd':
+        cardSuitKey = 'diamonds'
+        break
+      case 'h':
+        cardSuitKey = 'hearts'
+        break
+      case 's':
+        cardSuitKey = 'spades'
+        break
+      default:
+        cardSuitKey = 'unknown'
+        break
+    }
+
+    var cardVal = playerCard.match('[0-9jqka]*')
+
+    // create card key
+    const regex = RegExp('[2-7]')
+    var cardValKey = regex.test(cardVal) ? 'low' : 'high'
+
+    // append card key and suit key
+    var setKey = cardValKey.concat('_', cardSuitKey)
+
+    // append card to set
+    sets[setKey].push(playerCard)
+  })
   return sets
 }
 
