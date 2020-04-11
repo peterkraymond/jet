@@ -66,6 +66,7 @@ export default function MostRecentTurn() {
 			content = <Typography variant="h6">{result}</Typography>
 			break
 		case 'declaration':
+			result = 'Declaration - see recent turn'
 			content = (
 				<Typography variant="h6">
 					{last_turn['data']['player']}

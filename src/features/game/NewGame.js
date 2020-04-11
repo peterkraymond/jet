@@ -175,6 +175,7 @@ export default function NewGame() {
 					handleChange={handleChange}
 					idxOffset={0}
 				/>
+
 				<TeamDiv
 					teamName="Team 2"
 					players={players.slice(numPlayers / 2, numPlayers)}
@@ -213,8 +214,9 @@ const TeamDiv = (props) => (
 			<Typography>{props.teamName}: </Typography>
 		</Grid>
 		{props.players.map((player, idx) => (
-			<Grid item key={player.name} md={2}>
+			<Grid item key={idx} md={2}>
 				<TextField
+					key={idx}
 					placeholder={player.name}
 					onChange={props.handleChange('playerName', idx + props.idxOffset)}
 				/>
