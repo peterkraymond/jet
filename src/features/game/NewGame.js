@@ -3,12 +3,16 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
 	Button,
 	Checkbox,
+	FormControl,
+	FormLabel,
 	FormGroup,
 	FormControlLabel,
 	Grid,
 	Paper,
 	TextField,
 	Typography,
+	Radio,
+	RadioGroup,
 	useMediaQuery,
 } from '@material-ui/core'
 import _ from 'lodash'
@@ -37,24 +41,23 @@ export default function NewGame() {
 	const classes = useStyles()
 	const wsSend = useSendCb()
 
+	// create state to control 6 or 8 player game
+	const [numPlayers, setNumPlayers] = React.useState('6')
+	const handleNumPlayersChange = (event) => {
+		setNumPlayers(event.target.value)
+	}
+
 	// create state for virtual deck and players
 	const [useVirtualDeck, setUseVirtualDeck] = React.useState(true)
-	// const [players, setPlayers] = React.useState({
-	// 	p0: 'Player 0',
-	// 	p1: 'Player 1',
-	// 	p2: 'Player 2',
-	// 	p3: 'Player 3',
-	// 	p4: 'Player 4',
-	// 	p5: 'Player 5',
-	// })
-	// TODO: come back to consider swapping object for array for easier mapping back to ws messages
 	const [players, setPlayers] = React.useState([
-		'Player 0',
-		'Player 1',
-		'Player 2',
-		'Player 3',
-		'Player 4',
-		'Player 5',
+		{ name: 'Player 0', type: 'network' },
+		{ name: 'Player 1', type: 'network' },
+		{ name: 'Player 2', type: 'network' },
+		{ name: 'Player 3', type: 'network' },
+		{ name: 'Player 4', type: 'network' },
+		{ name: 'Player 5', type: 'network' },
+		{ name: 'Player 6', type: 'network' },
+		{ name: 'Player 7', type: 'network' },
 	])
 
 	// identify basic theming and responsive dialog size
@@ -70,49 +73,39 @@ export default function NewGame() {
 			case 'Submit':
 				const message = compileMessage()
 				wsSend(message)
-				// TODO: move this to another location, but for now, update the game with the cards for each player
-				// const allUpdates = updateCards()
-				// allUpdates.map(message => {
-				// 	wsSend(message)
-				// })
-				// TODO: this should be removed and more data should be returned with the create game message
-				store.dispatch(setField('all_players', players))
 				break
 			default:
 				break
 		}
 	}
 	// handle changing of parameters for react state
-	const handleChange = (name) => (evt) => {
+	const handleChange = (name, idx) => (evt) => {
+		const newPlayers = _.cloneDeep(players)
 		switch (name) {
 			case 'virtualDeck':
 				setUseVirtualDeck(evt.target.checked)
 				break
-			// TODO: remove the below section after discussion around pros and cons
-			case 'p0':
-			case 'p1':
-			case 'p2':
-			case 'p3':
-			case 'p4':
-			case 'p5':
-			case 'p6':
-				setPlayers((players) => ({
-					...players,
-					[name]: evt.target.value,
-				}))
-				break
+
 			case 0:
 			case 1:
 			case 2:
 			case 3:
 			case 4:
 			case 5:
+			case 6:
+			case 7:
+			case 'playerName':
 				// deep clone array
 				// NOTE: could use es6 style clone playersCopy = [...players]
 				// but only for shallow copy - not for nested or objects. Instead
 				// use lodash for a deep copy
-				const newPlayers = _.cloneDeep(players)
-				newPlayers[name] = evt.target.value
+				newPlayers[idx].name = evt.target.value
+				setPlayers(newPlayers)
+				break
+			case 'playerType':
+				evt.target.checked
+					? (newPlayers[idx].type = 'computer')
+					: (newPlayers[idx].type = 'network')
 				setPlayers(newPlayers)
 				break
 			default:
@@ -122,13 +115,19 @@ export default function NewGame() {
 
 	// create message to send back to ws connection
 	const compileMessage = () => {
-		const playersData = players.map((player) => {
-			const entry = { name: player, type: 'network' }
+		const playersData = players.slice(0, numPlayers).map((player) => {
+			const entry = { name: player.name, type: player.type }
 			return entry
 		})
 		const teamsData = [
-			{ name: 'team 1', players: players.slice(0, 3) },
-			{ name: 'team 2', players: players.slice(3, 6) },
+			{
+				name: 'team 1',
+				players: players.slice(0, numPlayers / 2).map((player) => player.name),
+			},
+			{
+				name: 'team 2',
+				players: players.slice(numPlayers / 2, numPlayers).map((player) => player.name),
+			},
 		]
 		const data = {
 			players: playersData,
@@ -147,31 +146,41 @@ export default function NewGame() {
 			<Paper className={classes.root}>
 				<Typography variant="h4">Game Setup:</Typography>
 
-				<Typography>Team 1</Typography>
 				<Grid container spacing={3}>
-					<Grid item md={4}>
-						<TextField placeholder={players[0]} onChange={handleChange(0)} />
-					</Grid>
-					<Grid item md={4}>
-						<TextField placeholder={players[1]} onChange={handleChange(1)} />
-					</Grid>
-					<Grid item md={4}>
-						<TextField placeholder={players[2]} onChange={handleChange(2)} />
-					</Grid>
+					<FormControl component="fieldset">
+						<FormLabel component="legend">Select Number of Players: </FormLabel>
+						<RadioGroup
+							aria-label="Number of Players"
+							name="Number of Players"
+							value={numPlayers}
+							onChange={(event) => setNumPlayers(event.target.value)}
+						>
+							<FormControlLabel
+								value="6"
+								control={<Radio color="primary" />}
+								label="6"
+							/>
+							<FormControlLabel
+								value="8"
+								control={<Radio color="primary" />}
+								label="8"
+							/>
+						</RadioGroup>
+					</FormControl>
 				</Grid>
 
-				<Typography>Team 2</Typography>
-				<Grid container spacing={3}>
-					<Grid item md={4}>
-						<TextField placeholder={players[3]} onChange={handleChange(3)} />
-					</Grid>
-					<Grid item md={4}>
-						<TextField placeholder={players[4]} onChange={handleChange(4)} />
-					</Grid>
-					<Grid item md={4}>
-						<TextField placeholder={players[5]} onChange={handleChange(5)} />
-					</Grid>
-				</Grid>
+				<TeamDiv
+					teamName="Team 1"
+					players={players.slice(0, numPlayers / 2)}
+					handleChange={handleChange}
+					idxOffset={0}
+				/>
+				<TeamDiv
+					teamName="Team 2"
+					players={players.slice(numPlayers / 2, numPlayers)}
+					handleChange={handleChange}
+					idxOffset={numPlayers / 2}
+				/>
 
 				<FormGroup row>
 					<FormControlLabel
@@ -197,3 +206,29 @@ export default function NewGame() {
 		</div>
 	)
 }
+
+const TeamDiv = (props) => (
+	<Grid container spacing={3}>
+		<Grid item md={2}>
+			<Typography>{props.teamName}: </Typography>
+		</Grid>
+		{props.players.map((player, idx) => (
+			<Grid item key={player.name} md={2}>
+				<TextField
+					placeholder={player.name}
+					onChange={props.handleChange('playerName', idx + props.idxOffset)}
+				/>
+				<FormControlLabel
+					control={
+						<Checkbox
+							checked={player.type === 'computer'}
+							onChange={props.handleChange('playerType', idx + props.idxOffset)}
+							color="primary"
+						/>
+					}
+					label="Computer Player"
+				/>
+			</Grid>
+		))}
+	</Grid>
+)

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
     title: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
     },
 }))
 
@@ -24,9 +24,8 @@ function App() {
     return (
         <div>
             <Typography variant="h3" className={classes.title}>
-                Literature!
+                Literature! Game Pin: {gamePin}
             </Typography>
-            <Typography>Game Pin: {gamePin}</Typography>
             <Navigation />
         </div>
     )
