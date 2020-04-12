@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux'
 import {
 	getCards,
 	getTeammates,
-	getPlayerId,
 	getPlayerName,
 	getCardsForSet,
 	getNextTurnPlayer,
+	getGamePin
 } from './gameSlice'
 import AskPlayer from './AskPlayer'
 import EnterCard from './EnterCard'
@@ -41,9 +41,8 @@ export default function EnterDeclaration() {
 	const classes = useStyles()
 	const wsSend = useSendCb()
 
-	const playerId = useSelector(getPlayerId)
 	const playerName = useSelector(getPlayerName)
-
+	const gamePin = useSelector(getGamePin)
 	const nextTurnPlayer = useSelector(getNextTurnPlayer)
 
 	// state and callbacks for selecting a set
@@ -86,6 +85,7 @@ export default function EnterDeclaration() {
 		const message = {
 			type: 'declaration',
 			data: {
+				pin: gamePin,
 				name: playerName,
 				card_set: declarationSet,
 				declared_map: declareMap,
