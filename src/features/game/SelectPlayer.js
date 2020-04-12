@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Button, Grid, MenuItem, Paper, Select, Typography } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getAllPlayers } from './gameSlice'
+import { getAllPlayers, getGamePin } from './gameSlice'
 import { setCurrentView } from '../navigation/navigationSlice'
 import store from '../../store'
 
@@ -38,6 +38,7 @@ export default function SelectPlayer() {
 	// TODO: update this to get names correctly from what is now an object in the datastore
 	const allPlayers = useSelector(getAllPlayers)
 
+	const gamePin = useSelector(getGamePin)
 	// create state to track player selected
 	const [name, setName] = React.useState(allPlayers[0].name)
 
@@ -71,6 +72,7 @@ export default function SelectPlayer() {
 		const message = {
 			type: 'select_player',
 			data: {
+				pin: gamePin,
 				name: name,
 			},
 		}

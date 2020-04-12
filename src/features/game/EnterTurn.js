@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core'
 import useSendCb from '../../hooks/useSendCb'
 import { useSelector } from 'react-redux'
-import { getCards, getOpponents, getPlayerId, getPlayerName, getNextTurnPlayer } from './gameSlice'
+import { getCards, getOpponents, getPlayerName, getNextTurnPlayer, getGamePin } from './gameSlice'
 import RadioPlayers from './RadioPlayers'
 import EnterCard from './EnterCard'
 import { setCurrentView } from '../navigation/navigationSlice'
@@ -31,7 +31,7 @@ export default function EnterTurn() {
 	const classes = useStyles()
 	const wsSend = useSendCb()
 
-	const playerId = useSelector(getPlayerId)
+	const gamePin = useSelector(getGamePin)
 	const playerName = useSelector(getPlayerName)
 
 	const nextTurnPlayer = useSelector(getNextTurnPlayer)
@@ -60,7 +60,7 @@ export default function EnterTurn() {
 		const message = {
 			type: 'question',
 			data: {
-				identifier: playerId,
+				pin: gamePin,
 				questioner: playerName,
 				respondent: opponent,
 				card: card,
