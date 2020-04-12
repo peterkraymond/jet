@@ -9,7 +9,7 @@ import RecentTurnSnack from './RecentTurnSnack'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(1),
 	},
 	title: {
-		padding: theme.spacing(3),
+		padding: theme.spacing(1),
 	},
 }))
 
@@ -90,10 +90,10 @@ export default function MostRecentTurn() {
 	return (
 		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
-				Turn Info:
+				Turn Info
 			</Typography>
 
-			<Grid container spacing={3}>
+			<Grid container spacing={1}>
 				<Grid item xs={9}>
 					<Typography variant="h5">Last Turn: </Typography>
 					{content}

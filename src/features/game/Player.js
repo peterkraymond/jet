@@ -8,7 +8,7 @@ import { setCurrentView } from '../navigation/navigationSlice'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(1),
 	},
 	title: {
-		padding: theme.spacing(3),
+		padding: theme.spacing(1),
 	},
 }))
 
@@ -35,10 +35,10 @@ export default function Player() {
 	return (
 		<Paper className={classes.root}>
 			<Typography variant="h4" className={classes.title}>
-				Player Data:
+				Player Data
 			</Typography>
 
-			<Grid container spacing={3}>
+			<Grid container spacing={1}>
 				{Object.keys(sets).map((set) => (
 					<SetDisplay key={set} sets={sets} idx={set} />
 				))}

@@ -14,7 +14,7 @@ import FormLabel from '@material-ui/core/FormLabel'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(1),
 	},
 	title: {
-		padding: theme.spacing(3),
+		padding: theme.spacing(1),
 	},
 }))
 

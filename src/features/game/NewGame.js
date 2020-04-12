@@ -23,7 +23,7 @@ import store from '../../store'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -144,9 +144,9 @@ export default function NewGame() {
 	return (
 		<div>
 			<Paper className={classes.root}>
-				<Typography variant="h4">Game Setup:</Typography>
+				<Typography variant="h4">Game Setup</Typography>
 
-				<Grid container spacing={3}>
+				<Grid container spacing={1}>
 					<FormControl component="fieldset">
 						<FormLabel component="legend">Select Number of Players: </FormLabel>
 						<RadioGroup
@@ -209,7 +209,7 @@ export default function NewGame() {
 }
 
 const TeamDiv = (props) => (
-	<Grid container spacing={3}>
+	<Grid container spacing={1}>
 		<Grid item md={2}>
 			<Typography>{props.teamName}: </Typography>
 		</Grid>

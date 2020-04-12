@@ -29,7 +29,7 @@ import store from '../../store'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -129,7 +129,7 @@ export default function SelectPlayerDialog() {
 				<DialogTitle id="form-dialog-title">Join Game</DialogTitle>
 				<DialogContent>
 					<Paper className={classes.root}>
-						<Grid container direction="row" spacing={3}>
+						<Grid container direction="row" spacing={1}>
 							<Grid item sm={6}>
 								<Typography>Game Pin </Typography>
 								<TextField

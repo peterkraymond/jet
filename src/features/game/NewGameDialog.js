@@ -23,9 +23,9 @@ import useSendCb from '../../hooks/useSendCb'
 import { setField } from './gameSlice'
 import store from '../../store'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -72,7 +72,7 @@ export default function NewGameDialog() {
 	const handleClickOpen = () => {
 		setOpen(true)
 	}
-	const handleClose = evt => {
+	const handleClose = (evt) => {
 		switch (evt.currentTarget.value) {
 			case 'Cancel':
 				break
@@ -93,7 +93,7 @@ export default function NewGameDialog() {
 		setOpen(false)
 	}
 	// handle changing of parameters for react state
-	const handleChange = name => evt => {
+	const handleChange = (name) => (evt) => {
 		switch (name) {
 			case 'virtualDeck':
 				setUseVirtualDeck(evt.target.checked)
@@ -106,7 +106,7 @@ export default function NewGameDialog() {
 			case 'p4':
 			case 'p5':
 			case 'p6':
-				setPlayers(players => ({
+				setPlayers((players) => ({
 					...players,
 					[name]: evt.target.value,
 				}))
@@ -132,7 +132,7 @@ export default function NewGameDialog() {
 
 	// create message to send back to ws connection
 	const compileMessage = () => {
-		const playersData = players.map(player => {
+		const playersData = players.map((player) => {
 			const entry = { name: player, type: 'network' }
 			return entry
 		})
@@ -218,7 +218,7 @@ export default function NewGameDialog() {
 				<DialogContent>
 					<Paper className={classes.root}>
 						<Typography>Team 1</Typography>
-						<Grid container spacing={3}>
+						<Grid container spacing={1}>
 							<Grid item md={4}>
 								<TextField placeholder={players[0]} onChange={handleChange(0)} />
 							</Grid>
@@ -232,7 +232,7 @@ export default function NewGameDialog() {
 					</Paper>
 					<Paper className={classes.root}>
 						<Typography>Team 2</Typography>
-						<Grid container spacing={3}>
+						<Grid container spacing={1}>
 							<Grid item md={4}>
 								<TextField placeholder={players[3]} onChange={handleChange(3)} />
 							</Grid>

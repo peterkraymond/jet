@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         textAlign: 'center',
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
     },
     title: {
         padding: theme.spacing(1),

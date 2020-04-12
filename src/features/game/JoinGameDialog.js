@@ -32,7 +32,7 @@ import store from '../../store'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2, 1),
 		margin: theme.spacing(1),
 		width: '90%',
 		'& > *': {
@@ -156,7 +156,7 @@ export default function JoinGameDialog() {
 			case 0:
 				return (
 					<Paper>
-						<Grid container direction="row" spacing={3}>
+						<Grid container direction="row" spacing={1}>
 							<Grid item sm={6}>
 								<Typography>Game Pin </Typography>
 								<TextField
@@ -170,7 +170,7 @@ export default function JoinGameDialog() {
 			case 1:
 				return (
 					<Paper>
-						<Grid container direction="row" spacing={3}>
+						<Grid container direction="row" spacing={1}>
 							<Grid item>
 								<Typography>Player </Typography>
 								<Select fullWidth value={name} onChange={handleChange('player')}>
