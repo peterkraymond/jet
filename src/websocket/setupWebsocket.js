@@ -2,7 +2,7 @@ export const id = Math.floor(Math.random() * 1000000 + 1)
 
 export const setupWebsocket = (url, endpoint) => {
     // create the WebSocket object
-    const socket = new WebSocket(`ws://${url}/${endpoint}`)
+    const socket = new WebSocket(`wss://${url}/${endpoint}`)
 
     // Assign the WebSocket callback functions
     socket.onopen = () => {
