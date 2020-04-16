@@ -9,7 +9,7 @@ import {
 	getPlayerName,
 	getCardsForSet,
 	getNextTurnPlayer,
-	getGamePin
+	getGamePin,
 } from './gameSlice'
 import AskPlayer from './AskPlayer'
 import EnterCard from './EnterCard'
@@ -61,7 +61,6 @@ export default function EnterDeclaration() {
 	const delcarationCards = getCardsForSet(declarationSet)
 	const teammates = useSelector(getTeammates)
 	const [declarePlayers, setDeclarePlayers] = React.useState(Array(6).fill(playerName))
-	// var declarePlayers = Array(6).fill(playerName)
 
 	const selectPlayerForIdx = (player, idx) => {
 		console.debug(`Player: ${player} and idx: ${idx}`)
@@ -92,6 +91,7 @@ export default function EnterDeclaration() {
 			},
 		}
 		wsSend(message)
+		setDeclarePlayers(Array(6).fill(playerName))
 		console.log(message)
 	}
 

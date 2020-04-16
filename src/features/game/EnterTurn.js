@@ -38,7 +38,7 @@ export default function EnterTurn() {
 
 	// state and callbacks for selction of opponent
 	const allOpponents = useSelector(getOpponents)
-	const [opponent, setOpponent] = React.useState(allOpponents[0].name)
+	const [opponent, setOpponent] = React.useState('')
 	const selectOpponent = (event) => {
 		setOpponent(event.target.value)
 	}
@@ -67,8 +67,8 @@ export default function EnterTurn() {
 			},
 		}
 		wsSend(message)
+		setOpponent('')
 		setCard('')
-		setOpponent(allOpponents[0].name)
 	}
 
 	// pull out the cards - these will be sorted by the selector

@@ -7,6 +7,13 @@ yarn start
 
 To start the front end for development, first install the necessary dependencies and start the server.
 
+If using ngrok, startup your server to be exposed outside of your local network.
+
+```
+cd ~/Applications/
+./ngrok http 3001
+```
+
 ## Repository Infrastructure
 
 ### Add prettier
