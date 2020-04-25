@@ -50,14 +50,14 @@ export default function NewGame() {
 	// create state for virtual deck and players
 	const [useVirtualDeck, setUseVirtualDeck] = React.useState(true)
 	const [players, setPlayers] = React.useState([
-		{ name: 'Player 0', type: 'network' },
-		{ name: 'Player 1', type: 'network' },
-		{ name: 'Player 2', type: 'network' },
-		{ name: 'Player 3', type: 'network' },
-		{ name: 'Player 4', type: 'network' },
-		{ name: 'Player 5', type: 'network' },
-		{ name: 'Player 6', type: 'network' },
-		{ name: 'Player 7', type: 'network' },
+		{ name: 'Player 0', type: 'network', team: '' },
+		{ name: 'Player 1', type: 'computer', team: '' },
+		{ name: 'Player 2', type: 'computer', team: '' },
+		{ name: 'Player 3', type: 'computer', team: '' },
+		{ name: 'Player 4', type: 'computer', team: '' },
+		{ name: 'Player 5', type: 'computer', team: '' },
+		{ name: 'Player 6', type: 'computer', team: '' },
+		{ name: 'Player 7', type: 'computer', team: '' },
 	])
 
 	// identify basic theming and responsive dialog size
@@ -115,10 +115,19 @@ export default function NewGame() {
 
 	// create message to send back to ws connection
 	const compileMessage = () => {
-		const playersData = players.slice(0, numPlayers).map((player) => {
-			const entry = { name: player.name, type: player.type }
+
+		const playersDataTeamOne = players.slice(0, numPlayers / 2).map((player) => {
+			const entry = { name: player.name, type: player.type, team: "team 1" }
 			return entry
 		})
+
+		const playersDataTeamTwo = players.slice(numPlayers / 2, numPlayers).map((player) => {
+			const entry = { name: player.name, type: player.type, team: "team 2" }
+			return entry
+		})
+
+		const playersData = playersDataTeamOne.concat(playersDataTeamTwo)
+		
 		const teamsData = [
 			{
 				name: 'team 1',
