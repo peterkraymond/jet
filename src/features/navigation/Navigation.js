@@ -10,9 +10,12 @@ import EnterTurn from '../game/EnterTurn'
 import EnterDeclaration from '../game/EnterDeclaration'
 import Teams from '../game/Teams'
 import Player from '../game/Player'
+import Menu from '../Menu'
 
 import { useSelector } from 'react-redux'
-import { getCurrentView } from './navigationSlice'
+import { getCurrentView, setCurrentView } from './navigationSlice'
+import store from '../../store'
+
 
 // pull in for testing
 import useSendCb from '../../hooks/useSendCb'
@@ -42,17 +45,29 @@ export default function Navigation() {
 
 	// const [currentView, setCurrentView] = useState(reduxCurrentView)
 
+	const createNewGame = () => {
+		store.dispatch(setCurrentView('create-game'))
+	}
+
+	const joinExistingGame = () => {
+		store.dispatch(setCurrentView('enter-pin'))
+	}
+
 	let content
 	switch (reduxCurrentView) {
 		case 'no-ws-connection':
 			content = 'No WS Connected'
+			break
+		case 'main-menu':
+			content = (
+				<Grid container>
+					<Grid item xs={12}>
+						<Menu onCreateNewGame={createNewGame} onJoinExistingGame={joinExistingGame}/>
+					</Grid>
+				</Grid>
+			)
+			break
 		case 'create-game':
-			// TODO: Convert to stepper to include
-			// 1. new game
-			// 2. enter pin
-			// 2. select player
-			// 3. game play
-			// 4. final results
 			content = (
 				<Grid container>
 					<Grid item xs={12}>

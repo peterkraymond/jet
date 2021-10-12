@@ -23,9 +23,6 @@ function App() {
 
     return (
         <div>
-            <Typography variant="h3" className={classes.title}>
-                Literature! Game Pin: {gamePin}
-            </Typography>
             <Navigation />
         </div>
     )

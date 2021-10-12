@@ -11,7 +11,7 @@ export const messageHandler = ({ type, event }) => {
 	switch (type) {
 		case 'onOpen':
 			store.dispatch(setStatus(true))
-			store.dispatch(setCurrentView('create-game'))
+			store.dispatch(setCurrentView('main-menu'))
 			break
 		case 'onMessage':
 			const onMessageData = JSON.parse(event.data)

@@ -63,21 +63,15 @@ export default function NewGame() {
 	// identify basic theming and responsive dialog size
 	const theme = useTheme()
 
-	const handleClose = (evt) => {
-		switch (evt.currentTarget.value) {
-			case 'Cancel':
-				break
-			case 'Skip':
-				store.dispatch(setCurrentView('enter-pin'))
-				break
-			case 'Submit':
-				const message = compileMessage()
-				wsSend(message)
-				break
-			default:
-				break
-		}
+	const navigateToMainMenu = () => {
+		store.dispatch(setCurrentView('main-menu'))
 	}
+
+	const createGame = () => {
+		const message = compileMessage()
+		wsSend(message)
+	}
+
 	// handle changing of parameters for react state
 	const handleChange = (name, idx) => (evt) => {
 		const newPlayers = _.cloneDeep(players)
@@ -205,13 +199,8 @@ export default function NewGame() {
 						label="Use Virtual Deck"
 					/>
 				</FormGroup>
-
-				<Button onClick={handleClose} color="secondary" value="Skip">
-					Join Existing Game
-				</Button>
-				<Button onClick={handleClose} color="primary" value="Submit">
-					Submit
-				</Button>
+				<Button onClick={navigateToMainMenu} color="secondary">Cancel</Button>
+				<Button onClick={createGame} color="primary">Create</Button>
 			</Paper>
 		</div>
 	)
