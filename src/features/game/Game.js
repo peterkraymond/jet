@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
 
 import MostRecentTurn from '../game/MostRecentTurn'
 import EnterTurn from '../game/EnterTurn'
