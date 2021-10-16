@@ -38,18 +38,13 @@ export default function EnterPin() {
 	const reduxGamePin = useSelector(getGamePin)
 	const [pin, setPin] = React.useState(reduxGamePin)
 
-	const handleClose = (evt) => {
-		switch (evt.currentTarget.value) {
-			case 'Cancel':
-				store.dispatch(setCurrentView('create-game'))
-				break
-			case 'Submit':
-				const message = compileMessage()
-				wsSend(message)
-				break
-			default:
-				break
-		}
+	const navigateToMainMenu = () => {
+		store.dispatch(setCurrentView('main-menu'))
+	}
+
+	const joinGame = () => {
+		const message = compileMessage()
+		wsSend(message)
 	}
 	// handle changing of parameters for react state
 	const handleChange = (name) => (evt) => {
@@ -78,17 +73,13 @@ export default function EnterPin() {
 			<Paper className={classes.root}>
 				<Grid container direction="row" spacing={1}>
 					<Grid item sm={12}>
-						<Typography>Game Pin </Typography>
+						<Typography>Game Pin</Typography>
 						<TextField placeholder={pin.toString()} onChange={handleChange('pin')} />
 					</Grid>
 				</Grid>
 			</Paper>
-			<Button onClick={handleClose} color="secondary" value="Cancel">
-				Return to Create Game
-			</Button>
-			<Button onClick={handleClose} color="primary" value="Submit">
-				Submit
-			</Button>
+			<Button onClick={navigateToMainMenu} color="secondary">Cancel</Button>
+			<Button onClick={joinGame} color="primary">Join</Button>
 		</div>
 	)
 }
