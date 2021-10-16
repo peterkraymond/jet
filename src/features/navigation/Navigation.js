@@ -21,6 +21,7 @@ import store from '../../store'
 import useSendCb from '../../hooks/useSendCb'
 // load test messages
 import { createGameMessage, enterPinMessage, selectPlayerMessage } from '../game/TestMessages'
+import Game from '../game/Game'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -99,25 +100,7 @@ export default function Navigation() {
 			// wsSend(selectPlayerMessage)
 			break
 		case 'game-play':
-			content = (
-				<Grid container>
-					<Grid item xs={12}>
-						<Teams />
-					</Grid>
-					<Grid item xs={12}>
-						<MostRecentTurn />
-					</Grid>
-					<Grid item xs={12}>
-						<Player />
-					</Grid>
-					<Grid item xs={12}>
-						<EnterTurn />
-					</Grid>
-					<Grid item xs={12}>
-						<EnterDeclaration />
-					</Grid>
-				</Grid>
-			)
+			content = <Game/>
 			break
 		case 'final-results':
 			content = 'Final Results'
